@@ -8,8 +8,9 @@
     "start:dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/index.ts",
     "build": "tsc",
     "prebuild": "rm -rf build",
-    "db:up": "docker-compose -f docker-compose.development-db.yml up -d",
-    "db:down": "docker-compose -f docker-compose.development-db.yml down"
+    "db:up": "docker-compose -f docker-compose.$npm_config_env-db.yml up -d",
+    "db:down": "docker-compose -f docker-compose.$npm_config_env-db.yml down",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -44,8 +45,22 @@
     "@types/node": "^18.7.20",
     "@types/swagger-jsdoc": "^6.0.1",
     "@types/swagger-ui-express": "^4.1.3",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "cross-env": "^7.0.3",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nodemon": "^2.0.20",
+    "prettier": "^2.3.2",
     "ts-node": "^10.9.1"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
