@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { v1Router } from './apps/router';
 import { HttpException } from './common/exceptions/http.exception';
