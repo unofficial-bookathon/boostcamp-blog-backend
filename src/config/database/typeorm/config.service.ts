@@ -11,7 +11,8 @@ export class TypeOrmConfigService {
   ) {}
 
   createTypeOrmOptions(): DataSourceOptions {
-    const entityPath = path.resolve(__dirname, '..', '..', '..', '**/*.entity.ts');
+    const entityPath = path.resolve(__dirname, '..', '..', '..', '**/*.entity.{js,ts}');
+    console.log(entityPath);
 
     return {
       type: 'mysql',
@@ -34,5 +35,3 @@ export class TypeOrmConfigService {
 }
 
 export const typeormConfigService = new TypeOrmConfigService(mysqlConfigService, appConfigService);
-
-typeormConfigService.createTypeOrmOptions();

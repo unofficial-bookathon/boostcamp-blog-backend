@@ -1,0 +1,46 @@
+tags:
+  name: User
+  description: 유저 API
+
+/users/{id}:
+  get:
+    summary: '유저 조회'
+    tags:
+      - User
+
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: number
+        description: 가져올 유저 아이디
+
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: 유저아이디
+                      example: 1
+                    nickname:
+                      type: string
+                      description: 유저 닉네임
+                      example: 'J031'
+      '404':
+        description: 'Not Found'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+            examples:
+              BAD_PARAMETERS:
+                $ref: '#/components/examples/USER_NOT_FOUND'

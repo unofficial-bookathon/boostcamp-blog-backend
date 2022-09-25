@@ -1,0 +1,16 @@
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        message:
+          type: string
+
+  examples:
+    USER_NOT_FOUND:
+      description: 해당하는 유저가 존재하지 않음
+      value:
+        errorCode: USER_NOT_FOUND
+        message: 해당하는 유저가 존재하지 않습니다
