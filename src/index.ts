@@ -1,16 +1,8 @@
 import 'reflect-metadata';
+import app from './app';
+import { logger } from './common/utils/logger';
 import { appConfigService } from './config/app/config.service';
-import { App } from './app';
-import { errorHandler, successHandler } from './common/middlewares/logger.middleware';
 
-const main = () => {
-  const app = new App();
-
-  if (!appConfigService.isTest()) {
-    app.useMiddlewares(successHandler, errorHandler);
-  }
-
-  app.listen(appConfigService.port);
-};
-
-main();
+app.listen(appConfigService.port, () => {
+  logger.info(`Listening to port: ${appConfigService.port}`);
+});

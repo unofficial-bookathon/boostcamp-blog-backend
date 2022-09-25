@@ -4,7 +4,7 @@ import { appConfigService } from '../../config/app/config.service';
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
-    Object.assign(info, { message: info.stack });
+    return { ...info, message: info.stack };
   }
   return info;
 });

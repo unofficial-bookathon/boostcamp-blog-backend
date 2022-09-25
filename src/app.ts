@@ -1,31 +1,22 @@
-import express, { Express, RequestHandler } from 'express';
-import { logger } from './common/utils/logger';
+import express from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { HttpException } from './common/exceptions/http.exception';
+import { exceptionConverter, exceptionFilter } from './common/middlewares/error.middleware';
+import { errorHandler, successHandler } from './common/middlewares/logger.middleware';
+import { appConfigService } from './config/app/config.service';
 
-export class App {
-  private readonly app: Express;
-  private middlewares: RequestHandler[] = [];
+const app = express();
 
-  constructor() {
-    this.app = express();
-  }
-
-  useMiddlewares(...middlewares: RequestHandler[]) {
-    this.middlewares.push(...middlewares);
-  }
-
-  private initializeMiddleware() {
-    this.middlewares.forEach((middleware) => this.app.use(middleware));
-  }
-
-  private initilize() {
-    this.initializeMiddleware();
-  }
-
-  listen(port: number) {
-    this.initilize();
-
-    this.app.listen(port, () => {
-      logger.info(`Listening Port: ${port}`);
-    });
-  }
+if (appConfigService.isTest()) {
+  app.use(successHandler);
+  app.use(errorHandler);
 }
+
+app.use((req, res, next) => {
+  next(new HttpException(StatusCodes.NOT_FOUND, 'NOT_FOUND', '존재하지 않는 API 입니다'));
+});
+
+app.use(exceptionConverter);
+app.use(exceptionFilter);
+
+export default app;
