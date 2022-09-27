@@ -8,7 +8,7 @@ import { appConfigService } from './config/app/config.service';
 
 const app = express();
 
-if (appConfigService.isTest()) {
+if (!appConfigService.isTest()) {
   app.use(successHandler);
   app.use(errorHandler);
 }
